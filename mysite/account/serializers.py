@@ -23,5 +23,3 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-
-# mngfdzsesrdtfygkjbnmbvdzes5d6iguhlmfrwestrydtufgiuohpjkp;,, mnbgfzetsrdytufi

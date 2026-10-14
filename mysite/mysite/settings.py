@@ -174,11 +174,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+# MAILERS = {
+#     'default': {
+#         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+#     },
+# }
+
+# Email (development: print emails to the runserver terminal)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@jobai.local'
+
+# Password reset
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+PASSWORD_RESET_TIMEOUT = 3600  # reset links expire after 1 hour (seconds)
+
 
 # Production Security Hardening
 if not DEBUG:

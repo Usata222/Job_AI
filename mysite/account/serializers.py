@@ -1,6 +1,9 @@
-# account/serializers.py
-
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
+
 from .models import User
 
 
@@ -22,4 +25,36 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = fields
 
 
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uid = serializers.CharField()
+    token = serializers.CharField()
+    new_password = serializers.CharField(write_only=True, min_length=8)
+
+    def validate(self, attrs):
+        invalid = serializers.ValidationError(
+            {'detail': 'Invalid or expired reset link.'}
+        )
+        try:
+            user_id = force_str(urlsafe_base64_decode(attrs['uid']))
+            user = User.objects.get(pk=user_id)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            raise invalid
+
+        if not default_token_generator.check_token(user, attrs['token']):
+            raise invalid
+
+        validate_password(attrs['new_password'], user)
+        attrs['user'] = user
+        return attrs
+
+    def save(self):
+        user = self.validated_data['user']
+        user.set_password(self.validated_data['new_password'])
+        user.save()
+        return user
+
+    

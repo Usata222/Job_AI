@@ -16,7 +16,6 @@ from .serializers import (
     RegisterSerializer,
     UserSerializer,
 )
-# lajsnuhosivoisdf
 
 class RegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]

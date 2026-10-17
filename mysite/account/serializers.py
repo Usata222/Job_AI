@@ -1,5 +1,6 @@
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
@@ -13,6 +14,20 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'password', 'first_name', 'last_name')
+
+    def validate(self, attrs):
+        # Build an unsaved user so the "too similar to your email/name"
+        # validator has something to compare the password against.
+        candidate = User(
+            email=attrs.get('email', ''),
+            first_name=attrs.get('first_name', ''),
+            last_name=attrs.get('last_name', ''),
+        )
+        try:
+            validate_password(attrs['password'], candidate)
+        except DjangoValidationError as e:
+            raise serializers.ValidationError({'password': list(e.messages)})
+        return attrs
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -57,4 +72,6 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         user.save()
         return user
 
-    
+
+
+

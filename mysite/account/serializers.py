@@ -74,5 +74,3 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
 
 
-
-# h iriuuriueriiuoi?

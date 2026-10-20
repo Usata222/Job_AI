@@ -17,6 +17,7 @@ class Profile(models.Model):
 
     class ExperienceLevel(models.TextChoices):
         ENTRY = 'entry', 'Entry level'
+        JUNIOR = 'junior', 'Junior'
         MID = 'mid', 'Mid level'
         SENIOR = 'senior', 'Senior'
         LEAD = 'lead', 'Lead / Manager'

@@ -6,7 +6,7 @@ class Profile(models.Model):
     class WorkArrangement(models.TextChoices):
         REMOTE = 'remote', 'Remote'
         HYBRID = 'hybrid', 'Hybrid'
-        ONSITE = 'onsite', 'On-site'
+        ONSITE = 'onsite', 'On-site (office)'
 
     class EmploymentType(models.TextChoices):
         FULL_TIME = 'full_time', 'Full-time'
@@ -31,14 +31,14 @@ class Profile(models.Model):
         help_text='The job title or keyword to search for, e.g. "Backend Developer".',
     )
     country = models.CharField(
-        max_length=2,
+        max_length=100,
         blank=True,
-        help_text='2-letter code of the country to search in, e.g. NG, GB, US.',
+        help_text='Optional. Country to search in, written in full, e.g. "Nigeria". Leave empty to search everywhere.',
     )
     location = models.CharField(
         max_length=150,
         blank=True,
-        help_text='City or area inside that country, e.g. "Lagos". Leave empty to search the whole country.',
+        help_text='Optional. City or area, e.g. "Lagos". Leave empty to search the whole country, or everywhere if no country is set.',
     )
     work_arrangements = models.JSONField(
         default=list,
@@ -67,15 +67,10 @@ class Profile(models.Model):
         max_length=20, choices=ExperienceLevel.choices, blank=True
     )
     years_of_experience = models.PositiveSmallIntegerField(null=True, blank=True)
-    min_monthly_salary = models.PositiveIntegerField(
+    min_monthly_salary_usd = models.PositiveIntegerField(
         null=True,
         blank=True,
-        help_text='The lowest salary you would accept, per month, in the currency below.',
-    )
-    salary_currency = models.CharField(
-        max_length=3,
-        blank=True,
-        help_text='3-letter currency code, e.g. NGN, USD, GBP.',
+        help_text='Optional. The lowest salary you would accept, per month, in US dollars (USD).',
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

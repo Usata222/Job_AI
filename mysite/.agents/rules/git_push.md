@@ -1,9 +1,8 @@
 # Git Push Trigger Rule
 
 Whenever the user says or types **"push"** (or variations like "push to github", "push code"):
-1. Proactively inspect modified and untracked files (`git status`, `git diff`).
-2. Ensure sensitive files (`.env`, database files, backups) remain excluded in `.gitignore`.
-3. Stage all appropriate changes (`git add .`).
-4. Generate a clear, descriptive commit message summarizing the changes.
-5. Commit and push directly to `origin <current-branch>` (e.g. `git push origin main`).
-6. Report a concise summary of the pushed commit and files to the user.
+1. Immediately stage appropriate modified/untracked files (`git add .` or specific changed files, ensuring sensitive files like `.env` remain ignored).
+2. Commit with a clear, concise message describing what changed.
+3. Push directly to `origin <current-branch>`.
+4. Respond with a single concise line confirming the push (e.g., `Pushed <hash> to origin/<branch>: <message>`) without unnecessary questions or commentary.
+

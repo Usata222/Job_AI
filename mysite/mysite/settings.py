@@ -61,9 +61,19 @@ INSTALLED_APPS = [
     'corsheaders',
     'account',
     'profiles',
+    'django_countries',
 ]
 
 AUTH_USER_MODEL = 'account.User'
+
+# Country dropdown: adds a "Worldwide" entry and puts it first
+COUNTRIES_OVERRIDE = {
+    'WW': 'Worldwide',
+    'US': 'United States (USA)',
+    'GB': 'United Kingdom (UK)',
+    'AE': 'United Arab Emirates (UAE)',
+}
+COUNTRIES_FIRST = ['WW']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

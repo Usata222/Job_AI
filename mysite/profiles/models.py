@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django_countries.fields import CountryField
 
 
 class Profile(models.Model):
@@ -30,15 +31,9 @@ class Profile(models.Model):
         blank=True,
         help_text='The job title or keyword to search for, e.g. "Backend Developer".',
     )
-    country = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text='Optional. Country to search in, written in full, e.g. "Nigeria". Leave empty to search everywhere.',
-    )
-    location = models.CharField(
-        max_length=150,
-        blank=True,
-        help_text='Optional. City or area, e.g. "Lagos". Leave empty to search the whole country, or everywhere if no country is set.',
+    country = CountryField(
+        default='WW',
+        help_text='The country to search for jobs in. Choose Worldwide to search every country.',
     )
     work_arrangements = models.JSONField(
         default=list,

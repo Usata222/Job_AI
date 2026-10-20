@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.utils.html import format_html
 
 from .models import Profile
@@ -35,6 +36,40 @@ class DropdownCheckboxes(forms.CheckboxSelectMultiple):
         )
 
 
+class SearchableSelect(forms.Select):
+    """A normal dropdown with a search box, using the select2 that ships with Django admin.
+
+    If the script fails to load, it still works as a plain dropdown.
+    """
+
+    @property
+    def media(self):
+        extra = '' if settings.DEBUG else '.min'
+        return forms.Media(
+            js=(
+                f'admin/js/vendor/jquery/jquery{extra}.js',
+                f'admin/js/vendor/select2/select2.full{extra}.js',
+                'admin/js/jquery.init.js',
+            ),
+            css={
+                'screen': (
+                    f'admin/css/vendor/select2/select2{extra}.css',
+                    'admin/css/autocomplete.css',
+                )
+            },
+        )
+
+    def render(self, name, value, attrs=None, renderer=None):
+        html = super().render(name, value, attrs, renderer)
+        element_id = (attrs or {}).get('id') or f'id_{name}'
+        return format_html(
+            "{}<script>django.jQuery(function () {{"
+            " django.jQuery('#{}').select2({{width: '22em'}}); }});</script>",
+            html,
+            element_id,
+        )
+
+
 class ProfileAdminForm(forms.ModelForm):
     work_arrangements = forms.MultipleChoiceField(
         choices=Profile.WorkArrangement.choices,
@@ -52,3 +87,4 @@ class ProfileAdminForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = '__all__'
+        widgets = {'country': SearchableSelect}

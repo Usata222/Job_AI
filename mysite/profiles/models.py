@@ -71,5 +71,11 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return f'Profile of {self.user.email}'
+
+
+
+
+    # jhb.jhuhoio'ihoi'oihoihoi

@@ -6,3 +6,8 @@ urlpatterns = [
     path('api/auth/', include('account.urls')),
     path('api/profile/', include('profiles.urls')),
 ]
+
+
+
+
+# h;wuicbhiauhc[oiajc[owjpwojpor]]

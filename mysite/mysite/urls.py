@@ -7,7 +7,3 @@ urlpatterns = [
     path('api/profile/', include('profiles.urls')),
 ]
 
-
-# kwenf'knw'knw'efw'ke'k
-
-# h;wuicbhiauhc[oiajc[owjpwojpor]]kempwoeooweoeo

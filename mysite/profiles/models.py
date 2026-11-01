@@ -77,5 +77,3 @@ class Profile(models.Model):
 
 
 
-
-    # jhb.jhuhoio'ihoi'oihoihoi

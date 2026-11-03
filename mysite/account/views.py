@@ -103,3 +103,9 @@ class PasswordResetConfirmView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'detail': 'Password has been reset.'})
+
+
+# uglhvyi;ug;iug;ug;iug;iug;ijv;hvhvckyfrxiyxlg;ifrx
+# jvlyuvptcyrxitrxyt;ug;iuhyfiyrssy;h;iuoydusiygoihtrduygoidk
+# hgciryrwytfg;ioftvlcfxzfljhlxzg;iuyuujdlutfgfxkflylufkuft
+# chfxkygh;cjzjfg/ugxiglgkk

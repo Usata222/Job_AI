@@ -41,3 +41,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+
+
+# dsvdvdfffffffffvaergrw6jej67kr78i
+# 45ynw4662v6616b5g5v5n67uikl9 o.
+# 72  n5                     46ny6nb74b55nnnnn
+# m47mqnb`5n1n`

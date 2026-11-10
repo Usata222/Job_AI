@@ -104,28 +104,21 @@ class PasswordResetConfirmView(APIView):
         serializer.save()
         return Response({'detail': 'Password has been reset.'})
 
-
-# uglhvyi;ug;iug;ug;iug;iug;ijv;hvhvckyfrxiyxlg;ifrx
-# jvlyuvptcyrxitrxyt;ug;iuhyfiyrssy;h;iuoydusiygoihtrduygoidk
-# sgstjfukfyukygkg
-# xfzrgzrgzrzdfzgh
-# xfgWYGMVBDAWAUYLJN
-# DWUI;K.NBDFSQ3tgraaq356789OLKJHqWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-# 3RBVI  6BRN
-
-
-
-
-# def post(self, request):
+# equest):
 #         serializer = PasswordResetConfirmSerializer(data=request.data)
 #         serializer.is_valid(raise_exception=True)
 #         serializer.save()
-#         return Response({'detail': 'Password has been reset.'})
+#         return Response({'detail': 'Pass
 
 
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response({'detail': 'Pass
 
-equest):
-        serializer = PasswordResetConfirmSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'detail': 'Pass
+
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'detail': 'Pass

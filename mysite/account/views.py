@@ -115,10 +115,16 @@ class PasswordResetConfirmView(APIView):
 #         serializer.save()
 #         return Response({'detail': 'Pass
 
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'detail': 'Pass
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
+        # return Response({'detail': 'Pass
 
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'detail': 'Pass
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
+        # return Response({'detail': 'Pass
+
+        'We received a request to reset your password.\n\n'
+                    f'Use this link to choose a new one:\n{link}\n\n'
+                    'The link expires in 1 hour. If you did not ask for this, '
+                    'you can ignore this email.'
+                ),

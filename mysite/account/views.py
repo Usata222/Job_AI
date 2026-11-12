@@ -128,3 +128,19 @@ class PasswordResetConfirmView(APIView):
                     'The link expires in 1 hour. If you did not ask for this, '
                     'you can ignore this email.'
                 ),
+
+
+
+                 def post(self, request):
+        serializer = PasswordResetRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data['email']
+
+        user = User.objects.filter(email__iexact=email, is_active=True).first()
+        if user:
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            link = f'{settings.FRONTEND_URL}/reset-password?uid={uid}&token={token}'
+            send_mail(
+                subject='Reset your password',
+                message=(

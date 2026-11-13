@@ -51,7 +51,23 @@ class ResumeUploadSerializer(serializers.Serializer):
 
 
 class ResumeSerializer(serializers.ModelSerializer):
+    text_characters = serializers.SerializerMethodField()
+    text_preview = serializers.SerializerMethodField()
+
     class Meta:
         model = Resume
-        fields = ('original_name', 'size_bytes', 'uploaded_at')
+        fields = (
+            'original_name',
+            'size_bytes',
+            'uploaded_at',
+            'text_status',
+            'text_characters',
+            'text_preview',
+        )
         read_only_fields = fields
+
+    def get_text_characters(self, resume):
+        return len(resume.extracted_text)
+
+    def get_text_preview(self, resume):
+        return resume.extracted_text[:500]

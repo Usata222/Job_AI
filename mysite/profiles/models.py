@@ -1,5 +1,10 @@
+import os
+import uuid
+
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from django_countries.fields import CountryField
 
 
@@ -71,9 +76,43 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return f'Profile of {self.user.email}'
 
 
+def resume_upload_path(instance, filename):
+    """Store under a generated name. The name the user sent is never used on disk."""
+    extension = os.path.splitext(filename)[1].lower()
+    return f'resumes/{instance.user_id}/{uuid.uuid4().hex}{extension}'
 
+
+class Resume(models.Model):
+    class TextStatus(models.TextChoices):
+        PENDING = 'pending', 'Not read yet'
+        EXTRACTED = 'extracted', 'Text extracted'
+        NO_TEXT = 'no_text', 'No readable text found'
+        FAILED = 'failed', 'Could not be read'
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='resume',
+    )
+    file = models.FileField(upload_to=resume_upload_path, max_length=255)
+    original_name = models.CharField(max_length=255)  # for display only
+    size_bytes = models.PositiveIntegerField()
+    uploaded_at = models.DateTimeField(auto_now=True)
+    extracted_text = models.TextField(blank=True)
+    text_status = models.CharField(
+        max_length=20, choices=TextStatus.choices, default=TextStatus.PENDING
+    )
+
+    def __str__(self):
+        return f'Resume of {self.user.email}'
+
+
+@receiver(post_delete, sender=Resume)
+def delete_resume_file(sender, instance, **kwargs):
+    """Remove the file from disk whenever its database row is deleted."""
+    if instance.file:
+        instance.file.delete(save=False)

@@ -154,8 +154,11 @@ REST_FRAMEWORK = {
         'register': '5/hour',
         'password_reset': '3/hour',
         'password_reset_confirm': '10/hour',
+        'resume_upload': '10/hour',
     },
 }
+
+RESUME_MAX_UPLOAD_BYTES = 5 * 1024 * 1024  # 5 MB
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),

@@ -1,7 +1,8 @@
 from django_countries.serializers import CountryFieldMixin
 from rest_framework import serializers
 
-from .models import Profile
+from .models import Profile, Resume
+from .validators import validate_resume_file
 
 
 class ChoiceListField(serializers.MultipleChoiceField):
@@ -43,3 +44,14 @@ class ProfileSerializer(CountryFieldMixin, serializers.ModelSerializer):
             'years_of_experience': {'max_value': 60},
             'min_monthly_salary_usd': {'max_value': 1_000_000},
         }
+
+
+class ResumeUploadSerializer(serializers.Serializer):
+    file = serializers.FileField(max_length=255, validators=[validate_resume_file])
+
+
+class ResumeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Resume
+        fields = ('original_name', 'size_bytes', 'uploaded_at')
+        read_only_fields = fields

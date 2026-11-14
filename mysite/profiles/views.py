@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
+from .extraction import extract_resume_text
 from .models import Profile, Resume
 from .serializers import ProfileSerializer, ResumeSerializer, ResumeUploadSerializer
 
@@ -76,7 +77,10 @@ class ResumeView(APIView):
         resume.original_name = _display_name(upload.name)
         resume.size_bytes = upload.size
         resume.file = upload
+        resume.extracted_text = ''
+        resume.text_status = Resume.TextStatus.PENDING
         resume.save()
+        extract_resume_text(resume)
 
         if old_path and old_path != resume.file.name:
             resume.file.storage.delete(old_path)

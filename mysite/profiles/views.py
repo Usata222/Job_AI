@@ -226,3 +226,13 @@ class ResumeView(APIView):
             ResumeSerializer(resume).data,
             status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
         )
+
+resume.original_name = _display_name(upload.name)
+        resume.size_bytes = upload.size
+        resume.file = upload
+        resume.extracted_text = ''
+        resume.text_status = Resume.TextStatus.PENDING
+        resume.save()
+        extract_resume_text(resume)
+
+        if old_path and old_path !=

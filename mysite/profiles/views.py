@@ -96,3 +96,133 @@ class ResumeView(APIView):
             return Response({'detail': 'No resume uploaded.'}, status=status.HTTP_404_NOT_FOUND)
         resume.delete()  # the file on disk is removed too
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        post(self, request):
+        serializer = ResumeUploadSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        upload = serializer.validated_data['file']
+
+        resume = Resume.objects.filter(user=request.user).first()
+        created = resume is None
+        old_path = None
+        if created:
+            resume = Resume(user=request.user)
+        else:
+            old_path = resume.file.name
+
+        resume.original_name = _display_name(upload.name)
+        resume.size_bytes = upload.size
+        resume.file = upload
+        resume.extracted_text = ''
+        resume.text_status = Resume.TextStatus.PENDING
+        resume.save()
+        extract_resume_text(resume)
+
+        if old_path and old_path != resume.file.name:
+            resume.file.storage.delete(old_path)
+
+        return Response(
+            ResumeSerializer(resume).data,
+            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+        )

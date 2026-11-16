@@ -236,3 +236,13 @@ resume.original_name = _display_name(upload.name)
         extract_resume_text(resume)
 
         if old_path and old_path !=
+
+
+        esume.size_bytes = upload.size
+        resume.file = upload
+        resume.extracted_text = ''
+        resume.text_status = Resume.TextStatus.PENDING
+        resume.save()
+        extract_resume_text(resume)
+
+        if old_path and old_path !=

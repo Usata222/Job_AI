@@ -254,3 +254,10 @@ resume.original_name = _display_name(upload.name)
         )
 
 resume.original_name = _displa
+
+eturn Response(
+            ResumeSerializer(resume).data,
+            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+        )
+
+        

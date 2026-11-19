@@ -251,13 +251,20 @@ resume.original_name = _display_name(upload.name)
         return Response(
             ResumeSerializer(resume).data,
             status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
-        )
+#         )
 
-resume.original_name = _displa
+# resume.original_name = _displa
 
-eturn Response(
+# eturn Response(
+#             ResumeSerializer(resume).data,
+#             status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+#         )
+
+          extract_resume_text(resume)
+
+        if old_path and old_path !=
+
+
+        return Response(
             ResumeSerializer(resume).data,
             status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
-        )
-
-        

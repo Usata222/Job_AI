@@ -281,8 +281,10 @@ resume = Resume.objects.filter(user=request.user).first()
 
         resume.original_name = _display_name(upload.name)
         resume.size_bytes = upload.size
-        resume.file = upload
-        resume.extracted_text = ''
-        resume.text_status = Resume.TextStatus.PENDING
-        resume.save()
-        extract_resume_text(resume)
+        # resume.file = upload
+        # resume.extracted_text = ''
+        # resume.text_status = Resume.TextStatus.PENDING
+        # resume.save()
+        riginal_name = _display
+        riginal_name = _display
+        # extract_resume_text(resume)

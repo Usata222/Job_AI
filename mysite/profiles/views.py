@@ -275,16 +275,20 @@ resume = Resume.objects.filter(user=request.user).first()
         # created = resume is None
         # old_path = None
         # if created:
-        #     resume = Resume(user=request.user)
-        # else:
-        #     old_path = resume.file.name
-
+        # riginal_name = _display
         resume.original_name = _display_name(upload.name)
         resume.size_bytes = upload.size
         # resume.file = upload
-        # resume.extracted_text = ''
-        # resume.text_status = Resume.TextStatus.PENDING
+        resume.extracted_text = ''
+        resume.text_status = Resume.TextStatus.PENDING
         # resume.save()
         riginal_name = _display
         riginal_name = _display
         # extract_resume_text(resume)
+
+
+        # riginal_name = _display
+# ijwpfj
+# q
+# [qker
+# g[

@@ -319,5 +319,5 @@ resume.original_name = _display_name(upload.name)
         resume.text_status = Resume.TextStatus.PENDING
 #         # resume.save()
 #         riginal_name = _display
-#         riginal_name = _display
+        riginal_name = _display
 #         # extract_resume_text(resume)
